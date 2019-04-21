@@ -1,10 +1,14 @@
 package com.mrwan.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pig_users")
-public class Users {
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,6 +87,11 @@ public class Users {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Category [id=" + id + ", name=" + name + "]";
     }
 
 }
