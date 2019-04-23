@@ -1,9 +1,11 @@
-package com.mrwan.service.users;
+package com.mrwan.pigcount.service.users;
 
-import com.mrwan.pojo.Users;
+import com.mrwan.pigcount.pojo.Users;
 import java.util.List;
 
 public interface UsersService {
+    boolean login_in(String username , String password);
+
     List<Users> findAll();
 
     List<Users> queryUserByName(String name);

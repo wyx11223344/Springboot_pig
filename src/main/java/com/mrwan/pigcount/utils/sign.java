@@ -1,4 +1,4 @@
-package com.mrwan.utils;
+package com.mrwan.pigcount.utils;
 
 import java.security.MessageDigest;
 import java.util.Date;

@@ -1,9 +1,8 @@
-package com.mrwan.service.users;
+package com.mrwan.pigcount.service.users;
 
-import com.mrwan.mapper.UsersMapper;
-import com.mrwan.pojo.Users;
-import com.mrwan.dao.UsersDAO;
-import com.mrwan.service.users.UsersService;
+import com.mrwan.pigcount.mapper.UsersMapper;
+import com.mrwan.pigcount.pojo.Users;
+import com.mrwan.pigcount.dao.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -48,6 +47,15 @@ public class UsersServiceImpl implements UsersService {
         // 使用通用Mapper的方法进行查询所有数据
         List<Users> list = this.usersMapper.getAll();
         return list;
+    }
+
+    @Override
+    public boolean login_in(String username , String password){
+        List<?> list = this.usersMapper.login_in(username,password);
+        if (list.get(0).equals("1")){
+            return true;
+        }
+        return false;
     }
 
 }

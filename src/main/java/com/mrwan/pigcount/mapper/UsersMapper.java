@@ -1,6 +1,6 @@
-package com.mrwan.mapper;
+package com.mrwan.pigcount.mapper;
 
-import com.mrwan.pojo.Users;
+import com.mrwan.pigcount.pojo.Users;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,4 +16,6 @@ public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
      * @return
      */
     List<Users> getAll();
+
+    List<?> login_in(String username , String password);
 }

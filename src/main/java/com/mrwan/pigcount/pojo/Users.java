@@ -1,4 +1,4 @@
-package com.mrwan.pojo;
+package com.mrwan.pigcount.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

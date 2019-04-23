@@ -2,8 +2,12 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mrwan.mapper.UsersMapper" >
-    <select id="getAll" resultType="com.mrwan.pojo.Users"  >
+<mapper namespace="com.mrwan.pigcount.mapper.UsersMapper" >
+    <select id="getAll" resultType="com.mrwan.pigcount.pojo.Users"  >
         SELECT * FROM pig_users
+    </select>
+
+    <select id="login_in" parameterType="String" resultType="String">
+        SELECT count(*) FROM pig_users WHERE username = #{0} AND password = #{1}
     </select>
 </mapper>
