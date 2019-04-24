@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * 用户信息表
+ * 表名为:pig_users
+ */
 @Entity
 @Table(name = "pig_users")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
@@ -91,7 +95,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "Category [id=" + id + ", name=" + name + "]";
+        return "Users [id=" + id + ", name=" + name + "]";
     }
 
 }

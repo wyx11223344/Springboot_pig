@@ -2,20 +2,22 @@ package com.mrwan.pigcount.mapper;
 
 import com.mrwan.pigcount.pojo.Users;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * 用户表，数据库操作入口
+ */
 @Mapper
 public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
-    @Select("select * from pig_users where name like '%${value}%'")
-    public List<Users> queryUserByName(String name);
-    /**
-     * 获取所有的user对象
-     *
-     * @return
-     */
-    List<Users> getAll();
 
-    List<?> login_in(String username , String password);
+    List<Users> login_in(String username , String password);
+
+    int register(Users users);
+
+    List<Users> code_check(String username , String code );
+
+    List<Users> regiseter_find(Users users);
+
+    int register_update(Users users);
 }

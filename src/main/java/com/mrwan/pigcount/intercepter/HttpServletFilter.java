@@ -4,6 +4,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * 过滤器
+ *
+ * */
 public class HttpServletFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {

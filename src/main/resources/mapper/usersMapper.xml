@@ -7,7 +7,20 @@
         SELECT * FROM pig_users
     </select>
 
-    <select id="login_in" parameterType="String" resultType="String">
-        SELECT count(*) FROM pig_users WHERE username = #{0} AND password = #{1}
+    <select id="login_in" parameterType="String" resultType="com.mrwan.pigcount.pojo.Users">
+        SELECT * FROM pig_users WHERE username = #{0} AND password = #{1}
     </select>
+
+    <select id="regiseter_find" parameterType="com.mrwan.pigcount.pojo.Users" resultType="com.mrwan.pigcount.pojo.Users">
+        select * from pig_users where username = #{username}
+    </select>
+
+    <insert id="register" parameterType="com.mrwan.pigcount.pojo.Users">
+        insert into pig_users ( username , password , name , create_time , state , code)
+            values(#{username},#{password},#{name},#{create_time},#{state},#{code})
+    </insert>
+
+    <update id="register_update" parameterType="com.mrwan.pigcount.pojo.Users">
+        update pig_users set code = #{code} , create_time = #{create_time} , password = #{password} where username = #{username}
+    </update>
 </mapper>

@@ -3,12 +3,12 @@ package com.mrwan.pigcount.service.users;
 import com.mrwan.pigcount.mapper.UsersMapper;
 import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.dao.UsersDAO;
+import com.mrwan.pigcount.utils.MailUtil;
+import com.mrwan.pigcount.utils.code_get;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,43 +19,78 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UsersMapper usersMapper;
 
+    /**
+     * 登录server
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
-    @Cacheable(value = "usersCache", key = "'users.findAll'")
-    public List<Users> findAll() {
-        System.out.println("从Mysql中查询");
-        List<Users> list = this.usersDao.findAll();
-        return list;
+    public List<Users> login_in(String username , String password){
+        List<Users> users = this.usersMapper.login_in(username,password);
+        return users;
     }
 
+    /**
+     * 注册server
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception
+     */
     @Override
-    @CacheEvict(value = "usersCache", key = "'users.findAll'")
-    public List<Users> queryUserByName(String name) {
-        System.out.println("缓存删除");
-        List<Users> list = this.usersMapper.queryUserByName(name);
-        return list;
-    }
-
-    public List<Users> getAll() {
-        return usersMapper.getAll();
-    }
-
-    // 使用通用Mapper和分页助手
-    @Override
-    public List<Users> queryUserByPage(Integer page, Integer rows) {
-        // 设置分页
-        PageHelper.startPage(page, rows);
-        // 使用通用Mapper的方法进行查询所有数据
-        List<Users> list = this.usersMapper.getAll();
-        return list;
-    }
-
-    @Override
-    public boolean login_in(String username , String password){
-        List<?> list = this.usersMapper.login_in(username,password);
-        if (list.get(0).equals("1")){
-            return true;
+    public int register(String username , String password) throws Exception {
+        String code = code_get.code_get();
+        Users users = new Users();
+        users.setName(username);
+        users.setUsername(username);
+        users.setPassword(password);
+        users.setCreate_time(new Date().getTime() / 1000);
+        users.setState(0);
+        users.setCode(code);
+        List<Users> find_users = this.usersMapper.regiseter_find(users);
+        if ( !find_users.isEmpty() ){
+            if (find_users.get(0).getState() == 1){
+                return -1;
+            }else {
+                int result = this.usersMapper.register_update(users);
+                if (result == 1){
+                    new Thread(new MailUtil(username, code)).start();
+                    return 1;
+                }else {
+                    return -400;
+                }
+            }
+        }else {
+            int result = this.usersMapper.register(users);
+            if (result == 1){
+                new Thread(new MailUtil(username, code)).start();
+                return 1;
+            }else {
+                return -200;
+            }
         }
-        return false;
+    }
+
+    /**
+     * 邮箱验证server
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public int code_check(String username , String password){
+        List<Users> users = this.usersMapper.code_check(username,password);
+        int date = (int) (new Date().getTime() / 1000);
+        if ( !users.isEmpty() ){
+            if ( users.get(0).getCreate_time() - date > 1800  ){//判断是否超过30分钟验证
+                return -1;
+            }else {
+                return 1;
+            }
+        }else {
+            return 0;
+        }
     }
 
 }

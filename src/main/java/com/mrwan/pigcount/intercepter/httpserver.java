@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
+/**
+ * 防止req被流读取一次失效
+ *
+ */
 public class httpserver extends HttpServletRequestWrapper {
     private final String body;
     public httpserver(HttpServletRequest request) throws IOException {

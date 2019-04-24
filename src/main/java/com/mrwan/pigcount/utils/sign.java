@@ -4,6 +4,14 @@ import java.security.MessageDigest;
 import java.util.Date;
 
 public class sign {
+    /**
+     * 签名验证
+     * @param signature
+     * @param rand
+     * @param timestamp
+     * @return
+     * @throws Exception
+     */
     public static boolean sign_check(String signature , String rand , int timestamp) throws Exception {
         if ( new Date().getTime()/1000 - timestamp > 10 || new Date().getTime()/1000 - timestamp < 0 ){
             return true;
@@ -22,7 +30,7 @@ public class sign {
     /**
      * @Comment SHA1实现
      * @Author Ron
-     * @Date 2017年9月13日 下午3:30:36
+     * @Date 2019年4月22日 下午3:30:36
      * @return
      */
     public static String sha1(String inStr) throws Exception {
@@ -48,7 +56,11 @@ public class sign {
         return hexValue.toString();
     }
 
-
+    /**
+     * MD5加密
+     * @param key
+     * @return
+     */
     public static String MD5(String key) {
         char hexDigits[] = {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'

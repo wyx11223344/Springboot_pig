@@ -8,23 +8,26 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * 这个就不用备注是啥吧
+ * 签名方法在utils的sign里面
+ */
 public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse response, Object object) throws Exception {
-//        httpserver request = new httpserver(req);
-//        String check = request.getHeader("Access-Control-Request-Headers");
-//        String str = request.getBody();
-//        if ( check != null ){
-//
-//        }else {
-//            JSONObject test = new JSONObject(str);
-//            if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
-//                response.setContentType("text/html;charset=utf-8");
-//                response.getWriter().write("签名验证失败");
-//                return false;
-//            }
-//        }
+        httpserver request = new httpserver(req);
+        String check = request.getHeader("Access-Control-Request-Headers");
+        String str = request.getBody();
+        if ( check != null ){
+
+        }else {
+            JSONObject test = new JSONObject(str);
+            if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
+                response.setContentType("text/html;charset=utf-8");
+                response.getWriter().write("签名验证失败");
+                return false;
+            }
+        }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         response.setHeader("Access-Control-Allow-Credentials","true");
