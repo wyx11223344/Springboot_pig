@@ -15,13 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse response, Object object) throws Exception {
-        httpserver request = new httpserver(req);
+        RequestWrapper request = new RequestWrapper(req);
         String check = request.getHeader("Access-Control-Request-Headers");
-        String str = request.getBody();
+        String str = request.getBodyString(request);
         if ( check != null ){
 
         }else {
+            if ( str.equals("") ){
+                response.setContentType("text/html;charset=utf-8");
+                response.getWriter().write("签名验证失败");
+                return false;
+            }
             JSONObject test = new JSONObject(str);
+            System.out.println(test);
             if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
                 response.setContentType("text/html;charset=utf-8");
                 response.getWriter().write("签名验证失败");

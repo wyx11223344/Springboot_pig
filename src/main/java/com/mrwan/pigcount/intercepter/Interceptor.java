@@ -12,6 +12,6 @@ public class Interceptor implements WebMvcConfigurer {
     //配置拦截器
     public void addInterceptors(InterceptorRegistry registry){
         //registry.addInterceptor此方法添加拦截器
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/*/*");
     }
 }
