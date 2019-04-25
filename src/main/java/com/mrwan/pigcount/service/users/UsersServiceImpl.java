@@ -75,18 +75,24 @@ public class UsersServiceImpl implements UsersService {
     /**
      * 邮箱验证server
      * @param username
-     * @param password
+     * @param code
      * @return
      */
     @Override
-    public int code_check(String username , String password){
-        List<Users> users = this.usersMapper.code_check(username,password);
+    public int code_check(String username , String code){
+        List<Users> users = this.usersMapper.code_check(username,code);
         int date = (int) (new Date().getTime() / 1000);
         if ( !users.isEmpty() ){
             if ( users.get(0).getCreate_time() - date > 1800  ){//判断是否超过30分钟验证
                 return -1;
             }else {
-                return 1;
+                int count = this.usersMapper.code_status(username);
+                if (count == 1){
+                    return 1;
+                }else {
+                    return -200;
+                }
+
             }
         }else {
             return 0;

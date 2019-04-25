@@ -20,4 +20,6 @@ public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
     List<Users> regiseter_find(Users users);
 
     int register_update(Users users);
+
+    int code_status(String username);
 }

@@ -147,9 +147,6 @@ public class LoginController {
 
         /**
          * 邮箱验证
-         *
-         *
-         *
          * @return
          * @throws Exception
          */
@@ -158,11 +155,11 @@ public class LoginController {
             BaseResponseInfo res = new BaseResponseInfo();
             JSONObject test = new JSONObject(req_change.value_get(req));
             try {
-                if ( test.getString("code").equals("") || test.getString("username").equals("") ){
+                if ( test.getString("code").equals("") || test.getString("name").equals("") ){
                     res.code = -1;
                     res.msg = "验证信息出错";
                 }else {
-                    int code_int = this.usersService.code_check(test.getString("username") , test.getString("code"));
+                    int code_int = this.usersService.code_check(test.getString("name") , test.getString("code"));
                     if ( code_int == 1 ){
                         res.code = 200;
                         res.msg = "邮箱验证成功！";
@@ -172,6 +169,9 @@ public class LoginController {
                     }else if ( code_int == -1 ){
                         res.code = -1;
                         res.msg = "邮箱验证超时！";
+                    }else if ( code_int == -200 ){
+                        res.code = -200;
+                        res.msg = "可以验证，但是服务器出错了，请刷新页面再试一次!";
                     }
                 }
             } catch(Exception e){

@@ -3,9 +3,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mrwan.pigcount.mapper.UsersMapper" >
-    <select id="getAll" resultType="com.mrwan.pigcount.pojo.Users"  >
-        SELECT * FROM pig_users
-    </select>
 
     <select id="login_in" parameterType="String" resultType="com.mrwan.pigcount.pojo.Users">
         SELECT * FROM pig_users WHERE username = #{0} AND password = #{1}
@@ -23,4 +20,13 @@
     <update id="register_update" parameterType="com.mrwan.pigcount.pojo.Users">
         update pig_users set code = #{code} , create_time = #{create_time} , password = #{password} where username = #{username}
     </update>
+
+    <select id="code_check" parameterType="String" resultType="com.mrwan.pigcount.pojo.Users">
+        SELECT * FROM pig_users WHERE username = #{0} AND code = #{1}
+    </select>
+
+    <update id="code_status" parameterType="String">
+        update pig_users set state = 1 where username = #{0}
+    </update>
+
 </mapper>

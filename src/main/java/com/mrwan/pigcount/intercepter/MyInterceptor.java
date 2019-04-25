@@ -27,7 +27,6 @@ public class MyInterceptor implements HandlerInterceptor {
                 return false;
             }
             JSONObject test = new JSONObject(str);
-            System.out.println(test);
             if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
                 response.setContentType("text/html;charset=utf-8");
                 response.getWriter().write("签名验证失败");
