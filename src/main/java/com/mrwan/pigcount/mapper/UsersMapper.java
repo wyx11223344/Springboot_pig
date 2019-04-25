@@ -2,6 +2,7 @@ package com.mrwan.pigcount.mapper;
 
 import com.mrwan.pigcount.pojo.Users;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,15 +12,47 @@ import java.util.List;
 @Mapper
 public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
 
-    List<Users> login_in(String username , String password);
+    /**
+     * 登录查询数据库
+     * @param username
+     * @param password
+     * @return
+     */
+    List<Users> login_in(@Param("username") String username ,@Param("password") String password);
 
+    /**
+     *
+     * @param users
+     * @return
+     */
     int register(Users users);
 
-    List<Users> code_check(String username , String code );
+    /**
+     *
+     * @param username
+     * @param code
+     * @return
+     */
+    List<Users> code_check(@Param("username") String username ,@Param("code") String code );
 
+    /**
+     *
+     * @param users
+     * @return
+     */
     List<Users> regiseter_find(Users users);
 
+    /**
+     *
+     * @param users
+     * @return
+     */
     int register_update(Users users);
 
-    int code_status(String username);
+    /**
+     * code验证成功，更新状态
+     * @param username
+     * @return
+     */
+    int code_status(@Param("username") String username);
 }

@@ -23,13 +23,13 @@ public class MyInterceptor implements HandlerInterceptor {
         }else {
             if ( str.equals("") ){
                 response.setContentType("text/html;charset=utf-8");
-                response.getWriter().write("签名验证失败");
+                response.getWriter().write("我看你就是个蛤蟆皮");
                 return false;
             }
             JSONObject test = new JSONObject(str);
             if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
                 response.setContentType("text/html;charset=utf-8");
-                response.getWriter().write("签名验证失败");
+                response.getWriter().write("我看你就是个蛤蟆皮");
                 return false;
             }
         }

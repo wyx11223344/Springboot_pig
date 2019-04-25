@@ -5,7 +5,7 @@
 <mapper namespace="com.mrwan.pigcount.mapper.UsersMapper" >
 
     <select id="login_in" parameterType="String" resultType="com.mrwan.pigcount.pojo.Users">
-        SELECT * FROM pig_users WHERE username = #{0} AND password = #{1}
+        SELECT * FROM pig_users WHERE username = #{username} AND password = #{password}
     </select>
 
     <select id="regiseter_find" parameterType="com.mrwan.pigcount.pojo.Users" resultType="com.mrwan.pigcount.pojo.Users">
@@ -22,11 +22,11 @@
     </update>
 
     <select id="code_check" parameterType="String" resultType="com.mrwan.pigcount.pojo.Users">
-        SELECT * FROM pig_users WHERE username = #{0} AND code = #{1}
+        SELECT * FROM pig_users WHERE username = #{username} AND code = #{code}
     </select>
 
     <update id="code_status" parameterType="String">
-        update pig_users set state = 1 where username = #{0}
+        update pig_users set state = 1 where username = #{username}
     </update>
 
 </mapper>

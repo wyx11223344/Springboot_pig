@@ -5,6 +5,7 @@ import java.util.List;
 import com.mrwan.pigcount.service.users.UsersService;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
 import com.mrwan.pigcount.utils.req_change;
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +22,14 @@ public class LoginController {
         private UsersService usersService;
 
         /**
-         * 用户登录
          *
          * @param session
+         * @param req
          * @return
          * @throws Exception
          */
         @RequestMapping("login_in")
         public BaseResponseInfo getUsersAll(HttpSession session , HttpServletRequest req) throws Exception {
-            System.out.println(123);
             BaseResponseInfo res = new BaseResponseInfo();
             JSONObject test = new JSONObject(req_change.value_get(req));
             try {
