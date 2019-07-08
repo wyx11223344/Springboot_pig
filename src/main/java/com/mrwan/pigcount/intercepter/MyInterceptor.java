@@ -26,12 +26,12 @@ public class MyInterceptor implements HandlerInterceptor {
                 response.getWriter().write("我看你就是个蛤蟆皮");
                 return false;
             }
-            JSONObject test = new JSONObject(str);
-            if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
-                response.setContentType("text/html;charset=utf-8");
-                response.getWriter().write("我看你就是个蛤蟆皮");
-                return false;
-            }
+//            JSONObject test = new JSONObject(str);
+//            if ( sign.sign_check(test.getString("signature") , test.getString("rand") , test.getInt("timestamp")) ){
+//                response.setContentType("text/html;charset=utf-8");
+//                response.getWriter().write("我看你就是个蛤蟆皮");
+//                return false;
+//            }
         }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
