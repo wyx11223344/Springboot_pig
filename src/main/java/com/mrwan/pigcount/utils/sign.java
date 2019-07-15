@@ -13,7 +13,7 @@ public class sign {
      * @throws Exception
      */
     public static boolean sign_check(String signature , String rand , int timestamp) throws Exception {
-        if ( new Date().getTime()/1000 - timestamp > 10 || new Date().getTime()/1000 - timestamp < 0 ){
+        if ( new Date().getTime()/1000 - timestamp > 600 || new Date().getTime()/1000 - timestamp < -600 ){
             return true;
         }
         String arr = timestamp + rand + "LOVESHEN";
