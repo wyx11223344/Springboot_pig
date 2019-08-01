@@ -55,4 +55,11 @@ public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
      * @return
      */
     int code_status(@Param("username") String username);
+
+    /**
+     * 用户登录ip记录
+     * @param userip
+     * @return
+     */
+    int ip_save(@Param("userip") String userip , @Param("username") String username);
 }

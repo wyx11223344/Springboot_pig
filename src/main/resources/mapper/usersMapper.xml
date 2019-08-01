@@ -29,4 +29,8 @@
         update pig_users set state = 1 where username = #{username}
     </update>
 
+    <update id="ip_save" parameterType="String">
+        update pig_users set ip = #{userip} where username = #{username}
+    </update>
+
 </mapper>

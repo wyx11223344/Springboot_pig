@@ -5,9 +5,11 @@ import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.dao.UsersDAO;
 import com.mrwan.pigcount.utils.MailUtil;
 import com.mrwan.pigcount.utils.code_get;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +96,49 @@ public class UsersServiceImpl implements UsersService {
                 }
 
             }
+        }else {
+            return 0;
+        }
+    }
+
+    /**
+     * 登录ip保存serve
+     * @param req
+     * @param username
+     * @return 200（成功），0（失败）
+     */
+    @Override
+    public int ip_save(HttpServletRequest req, String username) throws Exception {
+        if (req == null) {
+            throw (new Exception("getIpAddr method HttpServletRequest Object is null"));
+        }
+        String ipString = req.getHeader("x-forwarded-for");
+        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
+            ipString = req.getHeader("Proxy-Client-IP");
+        }
+        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
+            ipString = req.getHeader("WL-Proxy-Client-IP");
+        }
+        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
+            ipString = req.getRemoteAddr();
+        }
+
+        // 多个路由时，取第一个非unknown的ip
+        final String[] arr = ipString.split(",");
+        for (final String str : arr) {
+            if (!"unknown".equalsIgnoreCase(str)) {
+                ipString = str;
+                break;
+            }
+        }
+
+        if("0:0:0:0:0:0:0:1".equals(ipString)){
+            ipString = "127.0.0.1";
+        }
+
+        int check = this.usersMapper.ip_save(ipString,username);
+        if ( check > 0 ){
+            return 200;
         }else {
             return 0;
         }

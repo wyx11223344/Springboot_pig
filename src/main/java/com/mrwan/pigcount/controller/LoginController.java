@@ -5,7 +5,6 @@ import java.util.List;
 import com.mrwan.pigcount.service.users.UsersService;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
 import com.mrwan.pigcount.utils.req_change;
-import org.apache.ibatis.annotations.Param;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ public class LoginController {
         private UsersService usersService;
 
         /**
-         *
+         * 用户登录
          * @param session
          * @param req
          * @return
@@ -42,6 +41,7 @@ public class LoginController {
                         res.code = 200;
                         res.msg = "登录成功";
                         res.data = users;
+                        int count = this.usersService.ip_save(req , test.getString("username"));
                     }else if( users.get(0).getState() == 0 ){
                         res.code = 100;
                         res.msg = "账号未激活";
