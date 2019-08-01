@@ -41,7 +41,7 @@ public class LoginController {
                         res.code = 200;
                         res.msg = "登录成功";
                         res.data = users;
-                        int count = this.usersService.ip_save(req , test.getString("username"));
+                        this.usersService.ip_save(req , test.getString("username"));
                     }else if( users.get(0).getState() == 0 ){
                         res.code = 100;
                         res.msg = "账号未激活";

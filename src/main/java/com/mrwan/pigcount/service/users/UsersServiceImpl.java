@@ -109,34 +109,28 @@ public class UsersServiceImpl implements UsersService {
      */
     @Override
     public int ip_save(HttpServletRequest req, String username) throws Exception {
-        if (req == null) {
-            throw (new Exception("getIpAddr method HttpServletRequest Object is null"));
-        }
-        String ipString = req.getHeader("x-forwarded-for");
-        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
-            ipString = req.getHeader("Proxy-Client-IP");
-        }
-        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
-            ipString = req.getHeader("WL-Proxy-Client-IP");
-        }
-        if (StringUtils.isBlank(ipString) || "unknown".equalsIgnoreCase(ipString)) {
-            ipString = req.getRemoteAddr();
-        }
-
-        // 多个路由时，取第一个非unknown的ip
-        final String[] arr = ipString.split(",");
-        for (final String str : arr) {
-            if (!"unknown".equalsIgnoreCase(str)) {
-                ipString = str;
-                break;
+        String ip = req.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                ip = req.getHeader("Proxy-Client-IP");
             }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                ip = req.getHeader("WL-Proxy-Client-IP");
+            }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                ip = req.getHeader("HTTP_CLIENT_IP");
+            }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                ip = req.getHeader("HTTP_X_FORWARDED_FOR");
+            }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                ip = req.getRemoteAddr();
+            }
+
+        if("0:0:0:0:0:0:0:1".equals(ip)){
+            ip = "127.0.0.1";
         }
 
-        if("0:0:0:0:0:0:0:1".equals(ipString)){
-            ipString = "127.0.0.1";
-        }
-
-        int check = this.usersMapper.ip_save(ipString,username);
+        int check = this.usersMapper.ip_save(ip,username);
         if ( check > 0 ){
             return 200;
         }else {
