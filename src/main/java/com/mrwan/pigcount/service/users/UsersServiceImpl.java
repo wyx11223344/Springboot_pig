@@ -3,6 +3,7 @@ package com.mrwan.pigcount.service.users;
 import com.mrwan.pigcount.mapper.UsersMapper;
 import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.dao.UsersDAO;
+import com.mrwan.pigcount.pojo.adminUsers;
 import com.mrwan.pigcount.utils.MailUtil;
 import com.mrwan.pigcount.utils.code_get;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 
@@ -136,6 +138,46 @@ public class UsersServiceImpl implements UsersService {
         }else {
             return 0;
         }
+    }
+
+    /**
+     * 条件获取用户信息
+     * @param state
+     * @param in_stime
+     * @param in_etime
+     * @param last_stime
+     * @param last_etime
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Users> user_get(Integer state ,Integer in_stime,Integer in_etime,Integer last_stime,Integer last_etime) throws Exception {
+        List<Users> users = null;
+        try {
+            users = this.usersMapper.user_get(state,in_stime,in_etime,last_stime,last_etime);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
+    /**
+     * 登录server
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public List<adminUsers> login_user(String username , String password){
+        List<adminUsers> users = this.usersMapper.login_user(username,password);
+        return users;
+    }
+
+    @Override
+    public int user_change(Users user){
+        int count = this.usersMapper.user_change(user);
+        return count;
     }
 
 }

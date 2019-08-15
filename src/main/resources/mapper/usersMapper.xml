@@ -26,11 +26,76 @@
     </select>
 
     <update id="code_status" parameterType="String">
-        update pig_users set state = 1 where username = #{username}
+        update pig_users set state = 1
+        <where>
+            username = #{username}
+        </where>
     </update>
 
     <update id="ip_save" parameterType="String">
-        update pig_users set ip = #{userip} where username = #{username}
+        update pig_users set ip = #{userip} , last_time = unix_timestamp(now())
+        <where>
+            username = #{username}
+        </where>
+    </update>
+
+    <select id="user_get" parameterType="Int" resultType="com.mrwan.pigcount.pojo.Users">
+        SELECT * FROM pig_users
+        <where>
+            <if test="state != null">
+                state = #{state}
+            </if>
+            <if test="in_stime != null">
+                AND create_time > #{in_stime}
+            </if>
+            <if test="in_etime != null">
+                AND #{in_etime} > create_time
+            </if>
+            <if test="last_stime != null">
+                AND last_time > #{last_stime}
+            </if>
+            <if test="last_etime != null">
+                AND #{last_etime} > last_time
+            </if>
+        </where>
+    </select>
+
+
+    <select id="login_user" parameterType="String" resultType="com.mrwan.pigcount.pojo.adminUsers">
+        SELECT * FROM control_users WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <update id="user_change" parameterType="com.mrwan.pigcount.pojo.Users">
+        update pig_users
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="create_time != null">
+                create_time = #{create_time},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="ip != null">
+                ip = #{ip},
+            </if>
+            <if test="last_time != null">
+                last_time = #{last_time},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
     </update>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.mrwan.pigcount.mapper;
 
 import com.mrwan.pigcount.pojo.Users;
+import com.mrwan.pigcount.pojo.adminUsers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,4 +63,36 @@ public interface UsersMapper extends com.github.abel533.mapper.Mapper<Users> {
      * @return
      */
     int ip_save(@Param("userip") String userip , @Param("username") String username);
+
+    /**
+     * 获取用户信息
+     * @param state
+     * @param in_stime
+     * @param in_etime
+     * @param last_stime
+     * @param last_etime
+     * @return
+     */
+    List<Users> user_get(@Param("state") Integer state ,
+                         @Param("in_stime") Integer in_stime,
+                         @Param("in_etime") Integer in_etime,
+                         @Param("last_stime") Integer last_stime,
+                         @Param("last_etime") Integer last_etime);
+
+
+    /**
+     * 登录查询数据库
+     * @param username
+     * @param password
+     * @return
+     */
+    List<adminUsers> login_user(@Param("username") String username , @Param("password") String password);
+
+    /**
+     * 用户信息修改
+     * @param user
+     * @return
+     */
+    int user_change (Users user);
+
 }

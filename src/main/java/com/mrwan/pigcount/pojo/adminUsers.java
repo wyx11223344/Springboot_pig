@@ -2,19 +2,17 @@ package com.mrwan.pigcount.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 用户信息表
- * 表名为:pig_users
+ * 表名为:control_user
  */
 @Entity
 @Table(name = "pig_users")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
-public class Users implements Serializable {
+public class adminUsers implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,19 +29,16 @@ public class Users implements Serializable {
     private String password;
 
     @Column(name = "create_time")
-    private Long create_time;
+    private long create_time;
 
-    @Column(name = "state")
-    private Integer state;
-
-    @Column(name = "code")
-    private String code;
+    @Column(name = "limit")
+    private String limit;
 
     @Column(name = "ip")
     private String ip;
 
     @Column(name = "last_time")
-    private Long last_time;
+    private long last_time;
 
     public int getId() {
         return id;
@@ -77,28 +72,20 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public Long getCreate_time() {
+    public long getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Long create_time) {
+    public void setCreate_time(long create_time) {
         this.create_time = create_time;
     }
 
-    public Integer getState() {
-        return state;
+    public String getLimit() {
+        return limit;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public String getIp() {
@@ -109,32 +96,12 @@ public class Users implements Serializable {
         this.ip = ip;
     }
 
-    public Long getLast_time() {
+    public long getLast_time() {
         return last_time;
     }
 
-    public void setLast_time(Long last_time) {
+    public void setLast_time(long last_time) {
         this.last_time = last_time;
-    }
-
-    @Override
-    public String toString() {
-        return "Users [id=" + id + ", name=" + name + "]";
-    }
-
-    public Users toUsers(Integer id,String name,String username,String password,Long create_time,Integer state,String code,Long last_time,String ip)
-    {
-        Users users = new Users();
-        users.setId(id);
-        users.setName(name);
-        users.setUsername(username);
-        users.setPassword(password);
-        users.setCreate_time(create_time);
-        users.setState(state);
-        users.setCode(code);
-        users.setLast_time(last_time);
-        users.setIp(ip);
-        return users;
     }
 
 }
