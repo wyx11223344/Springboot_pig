@@ -25,7 +25,7 @@ public class MyInterceptor implements HandlerInterceptor {
 //        response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH");
         RequestWrapper request = new RequestWrapper(req);
         String Origin_allow = request.getHeader("Referer");
-        if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://vipshop.mrwanmisshen.com/swagger-ui.html") ){
+        if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://pigshop.mrwanmisshen.com") ){
             return true;
         }
         String check = request.getHeader("Access-Control-Request-Headers");
