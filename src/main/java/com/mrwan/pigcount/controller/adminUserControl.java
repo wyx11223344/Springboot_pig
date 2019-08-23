@@ -1,19 +1,13 @@
 package com.mrwan.pigcount.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.service.users.UsersService;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
-import com.mrwan.pigcount.utils.req_change;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 public class adminUserControl {
@@ -47,10 +41,8 @@ public class adminUserControl {
                                         @RequestParam(value = "last_etime", required = false) Integer last_etime) throws Exception {
             BaseResponseInfo res = new BaseResponseInfo();
             try {
-                PageHelper.startPage(page,pageSize);
-                List<Users> users = this.usersService.user_get(state,in_stime,in_etime,last_stime,last_etime);
-                PageInfo<Users> pageInfo = new PageInfo<Users>(users);
-                res.data = pageInfo;
+                PageInfo<Users> users = this.usersService.user_get(state,in_stime,in_etime,last_stime,last_etime,page,pageSize);
+                res.data = users;
             } catch (Exception e) {
                 e.printStackTrace();
             }
