@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mrwan.pigcount.mapper.TypeListMapper">
+
+    <select id="listGet" resultType="com.mrwan.pigcount.pojo.typeList">
+        SELECT * FROM type_list
+        <where>
+            <if test="type != null">
+                type = #{type}
+            </if>
+            <if test="type == null">
+                type = 1
+            </if>
+        </where>
+    </select>
+
+    <update id="listChange" parameterType="com.mrwan.pigcount.pojo.typeList">
+        update type_list
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="typename != null">
+                typename = #{typename},
+            </if>
+            <if test="is_get != null">
+                is_get = #{is_get},
+            </if>
+            <if test="icon_name != null">
+                icon_name = #{icon_name},
+            </if>
+            <if test="bgc != null">
+                bgc = #{bgc},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+</mapper>

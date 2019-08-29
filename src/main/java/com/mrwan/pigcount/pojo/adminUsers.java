@@ -104,4 +104,17 @@ public class adminUsers implements Serializable {
         this.last_time = last_time;
     }
 
+    public adminUsers(String name, String username, String password, long create_time, String limit, String ip, long last_time) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.create_time = create_time;
+        this.limit = limit;
+        this.ip = ip;
+        this.last_time = last_time;
+    }
+
+    public adminUsers(){
+
+    }
 }

@@ -137,4 +137,18 @@ public class Users implements Serializable {
         return users;
     }
 
+    public Users(String name, String username, String password, Long create_time, Integer state, String code, String ip, Long last_time) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.create_time = create_time;
+        this.state = state;
+        this.code = code;
+        this.ip = ip;
+        this.last_time = last_time;
+    }
+
+    public Users(){
+
+    }
 }

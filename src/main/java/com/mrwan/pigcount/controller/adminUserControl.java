@@ -2,6 +2,7 @@ package com.mrwan.pigcount.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.mrwan.pigcount.pojo.Users;
+import com.mrwan.pigcount.pojo.pageInfoB;
 import com.mrwan.pigcount.service.users.UsersService;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
 import io.swagger.annotations.Api;
@@ -41,13 +42,14 @@ public class adminUserControl {
                                         @RequestParam(value = "last_etime", required = false) Integer last_etime) throws Exception {
             BaseResponseInfo res = new BaseResponseInfo();
             try {
-                PageInfo<Users> users = this.usersService.user_get(state,in_stime,in_etime,last_stime,last_etime,page,pageSize);
+                pageInfoB<Users> users = this.usersService.user_get(state,in_stime,in_etime,last_stime,last_etime,page,pageSize);
                 res.data = users;
+                res.code = 200;
+                res.msg = "数据获取成功";
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            res.code = 200;
-            res.msg = "获取成功";
+
             return res;
         }
 

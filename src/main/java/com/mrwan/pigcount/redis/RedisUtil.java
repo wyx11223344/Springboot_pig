@@ -1,4 +1,4 @@
-package com.mrwan.pigcount.utils;
+package com.mrwan.pigcount.redis;
 
 import java.util.List;
 import java.util.Map;

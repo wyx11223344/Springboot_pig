@@ -1,8 +1,8 @@
 package com.mrwan.pigcount.service.users;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mrwan.pigcount.mapper.UsersMapper;
+import com.mrwan.pigcount.pojo.pageInfoB;
 import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.dao.UsersDAO;
 import com.mrwan.pigcount.pojo.adminUsers;
@@ -154,13 +154,13 @@ public class UsersServiceImpl implements UsersService {
      */
     @Override
     @Cacheable(value = "userList" ,key = "targetClass + methodName +#page + #pageSize +#state + #in_stime + #in_etime + #last_etime + #last_stime")
-    public PageInfo<Users> user_get(Integer state , Integer in_stime, Integer in_etime, Integer last_stime, Integer last_etime , Integer page, Integer pageSize) throws Exception {
-        PageInfo<Users> pageInfo = null;
+    public pageInfoB<Users> user_get(Integer state , Integer in_stime, Integer in_etime, Integer last_stime, Integer last_etime , Integer page, Integer pageSize) throws Exception {
+        pageInfoB<Users> pageInfo = null;
         try {
 
             PageHelper.startPage(page,pageSize);
             List<Users> users = this.usersMapper.user_get(state,in_stime,in_etime,last_stime,last_etime);
-            pageInfo = new PageInfo<Users>(users);
+            pageInfo = new pageInfoB<Users>(users);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -176,7 +176,12 @@ public class UsersServiceImpl implements UsersService {
      */
     @Override
     public List<adminUsers> login_user(String username , String password){
-        List<adminUsers> users = this.usersMapper.login_user(username,password);
+        List<adminUsers> users = null;
+        try {
+            users = this.usersMapper.login_user(username,password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return users;
     }
 
@@ -188,7 +193,12 @@ public class UsersServiceImpl implements UsersService {
     @Override
     @CacheEvict(value = "userList" , allEntries = true)
     public int user_change(Users user){
-        int count = this.usersMapper.user_change(user);
+        int count = 0;
+        try {
+            count = this.usersMapper.user_change(user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return count;
     }
 

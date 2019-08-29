@@ -3,6 +3,7 @@ package com.mrwan.pigcount.service.users;
 import com.github.pagehelper.PageInfo;
 import com.mrwan.pigcount.pojo.Users;
 import com.mrwan.pigcount.pojo.adminUsers;
+import com.mrwan.pigcount.pojo.pageInfoB;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -54,7 +55,7 @@ public interface UsersService {
      * @return
      * @throws Exception
      */
-    PageInfo<Users> user_get(Integer state , Integer in_stime, Integer in_etime, Integer last_stime, Integer last_etime, Integer page, Integer pageSize) throws Exception;
+    pageInfoB<Users> user_get(Integer state , Integer in_stime, Integer in_etime, Integer last_stime, Integer last_etime, Integer page, Integer pageSize) throws Exception;
 
 
     /**
