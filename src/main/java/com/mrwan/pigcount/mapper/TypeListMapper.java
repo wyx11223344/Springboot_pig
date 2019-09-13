@@ -24,4 +24,11 @@ public interface TypeListMapper extends com.github.abel533.mapper.Mapper<typeLis
      * @return
      */
     int listChange(typeList changetype);
+
+    /**
+     * 类型列表新增
+     * @param changetype
+     * @return
+     */
+    int listAdd(typeList changetype);
 }

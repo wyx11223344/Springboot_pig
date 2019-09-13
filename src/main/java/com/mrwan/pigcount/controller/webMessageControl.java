@@ -1,5 +1,7 @@
 package com.mrwan.pigcount.controller;
 
+import com.mrwan.pigcount.pojo.pageInfoB;
+import com.mrwan.pigcount.pojo.picList;
 import com.mrwan.pigcount.pojo.typeList;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
 import io.swagger.annotations.Api;
@@ -27,11 +29,54 @@ public class webMessageControl {
 
         @ApiOperation(value = "获取类型列表")
         @RequestMapping("list_get")
-        public BaseResponseInfo userGet(@RequestParam(value = "type", required = false) Integer type){
+        public BaseResponseInfo listGet(@RequestParam(value = "type", required = false) Integer type){
             BaseResponseInfo res = new BaseResponseInfo();
             try {
                 List<typeList> typeList = this.webMessageService.listGet(type);
                 res.data = typeList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.code = 200;
+            res.msg = "获取成功";
+            return res;
+        }
+
+        @ApiOperation(value = "类型图片列表获取")
+        @RequestMapping("type_pic_list")
+        public BaseResponseInfo typePicList(@RequestParam(value = "page", required = false) Integer page,
+                                            @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                            @RequestParam(value = "type", required = false) String type,
+                                            @RequestParam(value = "create_itime", required = false) Long create_itime,
+                                            @RequestParam(value = "create_etime", required = false) Long create_etime,
+                                            @RequestParam(value = "choose", required = false) Boolean choose){
+            BaseResponseInfo res = new BaseResponseInfo();
+            try {
+                if ( choose == null ){
+                    choose = false;
+                }
+                if (choose == true){
+                    List<picList> picList = this.webMessageService.typePicNo();
+                    res.data = picList;
+                }else {
+                    pageInfoB<picList> picList = this.webMessageService.typePicList(type, create_itime, create_etime, page, pageSize);
+                    res.data = picList;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.code = 200;
+            res.msg = "获取成功";
+            return res;
+        }
+
+        @ApiOperation(value = "图片查询类型获取")
+        @RequestMapping("type_pic_type")
+        public BaseResponseInfo typePicType(){
+            BaseResponseInfo res = new BaseResponseInfo();
+            try {
+                List<String> picType = this.webMessageService.typePicType();
+                res.data = picType;
             } catch (Exception e) {
                 e.printStackTrace();
             }

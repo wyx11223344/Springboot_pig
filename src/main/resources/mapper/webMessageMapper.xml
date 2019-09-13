@@ -40,4 +40,25 @@
         </where>
     </update>
 
+    <insert id="listAdd" parameterType="com.mrwan.pigcount.pojo.typeList">
+        insert INTO type_list(
+            type , typename , is_get , icon_name , bgc
+        )
+        values (
+            1,
+        <if test="typename != null">
+            #{typename},
+        </if>
+        <if test="is_get != null">
+            #{is_get},
+        </if>
+        <if test="icon_name != null">
+            #{icon_name},
+        </if>
+        <if test="bgc != null">
+            #{bgc}
+        </if>
+        )
+    </insert>
+
 </mapper>

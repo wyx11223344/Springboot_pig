@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mrwan.pigcount.mapper.PicListMapper">
+
+    <select id="ListGet" resultType="com.mrwan.pigcount.pojo.picList">
+        SELECT * FROM pic_list
+        <where>
+            <if test="type != null">
+                type = #{type}
+            </if>
+            <if test="create_itime != null">
+                AND create_time > #{create_itime}
+            </if>
+            <if test="create_etime != null">
+                AND #{create_etime} > create_time
+            </if>
+        </where>
+    </select>
+
+    <select id="TypeListNo" resultType="com.mrwan.pigcount.pojo.picList">
+        SELECT c.id,c.pic_url,c.type,c.create_time
+        FROM (
+            SELECT a.id,a.pic_url,a.type,t.icon_name,a.create_time
+            FROM (
+                SELECT *
+                FROM pic_list
+                <where>
+                    type = '/typeList/'
+                </where>
+            ) as a
+            LEFT JOIN type_list as t
+            on a.pic_url = t.icon_name and t.type !=  -1
+            GROUP BY a.id
+        ) as c
+        <where>
+            ISNULL(c.icon_name) = 1
+        </where>
+    </select>
+
+    <select id="TypeListType" resultType="String">
+        SELECT type
+        FROM pic_list
+        GROUP BY type
+    </select>
+
+    <update id="picChange" parameterType="com.mrwan.pigcount.pojo.picList">
+        update pic_list
+        <set>
+            <if test="pic_url != null">
+                pic_url = #{pic_url},
+            </if>
+            create_time = unix_timestamp(now())
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+</mapper>

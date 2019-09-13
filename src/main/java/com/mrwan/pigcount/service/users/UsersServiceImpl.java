@@ -157,7 +157,6 @@ public class UsersServiceImpl implements UsersService {
     public pageInfoB<Users> user_get(Integer state , Integer in_stime, Integer in_etime, Integer last_stime, Integer last_etime , Integer page, Integer pageSize) throws Exception {
         pageInfoB<Users> pageInfo = null;
         try {
-
             PageHelper.startPage(page,pageSize);
             List<Users> users = this.usersMapper.user_get(state,in_stime,in_etime,last_stime,last_etime);
             pageInfo = new pageInfoB<Users>(users);
