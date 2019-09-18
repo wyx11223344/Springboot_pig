@@ -129,7 +129,7 @@ public class WebMessageImpl implements WebMessageService {
         InputStream inputStream=file.getInputStream();
         FtpFileUtil.deleteFile(picList.getPic_url(), picList.getType());
         Boolean flag = FtpFileUtil.uploadFile(new_url + a, inputStream, picList.getType());
-        if(flag==true){
+        if(flag){
             picList picNewList = new picList(picList.getId(), new_url + a, picList.getType(), (long) 0);
             int count = this.picListMapper.picChange(picNewList);
             if (count > 0){
