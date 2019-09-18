@@ -119,7 +119,7 @@ public class WebMessageImpl implements WebMessageService {
     }
 
     @Override
-    @CacheEvict(value="picList" , allEntries = true)
+    @CacheEvict(value = "picList" , allEntries = true)
     public Boolean picChange(picList picList, String new_url, MultipartFile file) throws IOException {
         //对文文件的全名进行截取然后在后缀名进行删选。
         int begin = file.getOriginalFilename().indexOf(".");
