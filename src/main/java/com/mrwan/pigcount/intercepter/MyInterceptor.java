@@ -22,39 +22,42 @@ public class MyInterceptor implements HandlerInterceptor {
         if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://pigshop.mrwanmisshen.com/swagger-ui.html") ){
             return true;
         }
-//        String check = request.getHeader("Access-Control-Request-Headers");
-//        String signature = request.getParameter("signature");
-//        String rand = request.getParameter("rand");
-//        Integer timestamp = Integer.valueOf(request.getParameter("timestamp"));
-//        if ( check != null ){
-//
-//        }else {
-//            if ( signature.equals("") || rand.equals("") || timestamp == null ){
-//                response.setStatus(201);
-//                response.getWriter().print("我看你就是个蛤蟆皮");
-//                response.getWriter();
-//                response.getWriter();
-//                return false;
-//            }
-//            if ( sign.sign_check(signature , rand , timestamp )){
-//                response.setStatus(201);
-//                response.getWriter().print("超时了");
-//                response.getWriter().flush();
-//                response.getWriter().close();
-//                return false;
-//            }
-//            HttpSession uuu = request.getSession();
-//            Object users = uuu.getAttribute("username");
-//            if (users != null) {
-//                uuu.setMaxInactiveInterval(1800);
-//            } else {
-//                response.setStatus(201);
-//                response.getWriter().print("您无权访问");
-//                response.getWriter().flush();
-//                response.getWriter().close();
-//                return false;
-//            }
-//        }
+        String check = request.getHeader("Access-Control-Request-Headers");
+        String signature = request.getParameter("signature");
+        String rand = request.getParameter("rand");
+        Integer timestamp = Integer.valueOf(request.getParameter("timestamp"));
+        Boolean noLog = Boolean.valueOf(request.getParameter("noLog"));
+        if ( check != null ){
+
+        }else {
+            if ( signature.equals("") || rand.equals("") || timestamp == null ){
+                response.setStatus(201);
+                response.getWriter().print("我看你就是个蛤蟆皮");
+                response.getWriter();
+                response.getWriter();
+                return false;
+            }
+            if ( sign.sign_check(signature , rand , timestamp )){
+                response.setStatus(201);
+                response.getWriter().print("超时了");
+                response.getWriter().flush();
+                response.getWriter().close();
+                return false;
+            }
+            if (!noLog){
+                HttpSession uuu = request.getSession();
+                Object users = uuu.getAttribute("username");
+                if (users != null) {
+                    uuu.setMaxInactiveInterval(1800);
+                } else {
+                    response.setStatus(201);
+                    response.getWriter().print("您无权访问");
+                    response.getWriter().flush();
+                    response.getWriter().close();
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

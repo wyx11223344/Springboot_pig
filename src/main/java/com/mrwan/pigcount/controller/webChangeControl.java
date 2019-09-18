@@ -20,14 +20,14 @@ public class webChangeControl {
 
     @Api(value="网页基础信息修改" , tags="网页基础信息修改")
     @RestController
-    @RequestMapping(value = "webChange")
+    @RequestMapping(value = "webChange", method = RequestMethod.POST)
     public class webChange {
 
         @Autowired
         private WebMessageService webMessageService;
 
         @ApiOperation(value = "修改和新增类型列表")
-        @RequestMapping(value = "list_change" , method = RequestMethod.POST)
+        @RequestMapping(value = "list_change")
         public BaseResponseInfo userGet(@RequestParam(value = "id", required = false) Integer id,
                                         @RequestParam(value = "type", required = false) Integer type,
                                         @RequestParam(value = "typename", required = false) String typename,
@@ -60,6 +60,8 @@ public class webChangeControl {
                                           @RequestParam(value="file", required = false) MultipartFile file){
             BaseResponseInfo res = new BaseResponseInfo();
             try {
+                System.out.println(file);
+                System.out.println(id);
                 picList picList = new picList(id, pic_url, type, (long) 0);
                 Boolean isSuccess = this.webMessageService.picChange(picList, new_url, file);
                 if ( isSuccess ){

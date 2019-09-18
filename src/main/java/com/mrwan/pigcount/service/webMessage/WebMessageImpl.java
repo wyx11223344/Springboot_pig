@@ -49,7 +49,7 @@ public class WebMessageImpl implements WebMessageService {
     @Override
     @Caching(evict = {
             @CacheEvict(value = "typeList" , allEntries = true),
-            @CacheEvict(value = "picList" , key = "targetClass + 'typePicListnulltrue'")
+            @CacheEvict(value = "picList" , key = "targetClass + 'typePicNo'")
     })
     public int listChange(typeList changetype){
         int count = 0;

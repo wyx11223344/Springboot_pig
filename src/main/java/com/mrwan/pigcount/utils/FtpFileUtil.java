@@ -32,12 +32,15 @@ public class FtpFileUtil {
                 ftp.disconnect();
                 return success;
             }
+            System.out.println("开始上传");
+            ftp.enterLocalPassiveMode();
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
             ftp.makeDirectory(FTP_BASEPATH);
             ftp.changeWorkingDirectory(FTP_BASEPATH);
             ftp.storeFile(originFileName,input);
             input.close();
             ftp.logout();
+            System.out.println("上传成功");
             success = true;
         } catch (IOException e) {
             e.printStackTrace();
