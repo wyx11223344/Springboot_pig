@@ -89,4 +89,20 @@
         </where>
     </update>
 
+    <select id="picOverTime" resultType="com.mrwan.pigcount.pojo.picList">
+        select *
+        from pic_list
+        <where>
+            del_time is not null
+            AND unix_timestamp(now()) > del_time + 604800
+        </where>
+    </select>
+
+    <delete id="picDump">
+        DELETE
+        FROM pic_list
+        <where>
+            id = #{id}
+        </where>
+    </delete>
 </mapper>

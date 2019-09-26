@@ -51,4 +51,17 @@ public interface PicListMapper extends com.github.abel533.mapper.Mapper<typeList
      * @return
      */
     int picDel(@Param("del") Boolean del, @Param("id") Integer id);
+
+    /**
+     * 获取超时照片
+     * @return
+     */
+    List<picList> picOverTime();
+
+    /**
+     * 彻底删除图片数据库信息
+     * @param id
+     * @return
+     */
+    int picDump(@Param("id") Integer id);
 }

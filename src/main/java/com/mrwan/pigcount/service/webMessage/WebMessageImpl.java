@@ -17,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class WebMessageImpl implements WebMessageService {
     @Autowired
@@ -169,6 +173,12 @@ public class WebMessageImpl implements WebMessageService {
         }
     }
 
+    /**
+     * 删除图片
+     * @param del
+     * @param id
+     * @return
+     */
     @Override
     @CacheEvict(value = "picList" , allEntries = true)
     public int picDel(Boolean del, Integer id) {
@@ -179,5 +189,39 @@ public class WebMessageImpl implements WebMessageService {
             e.printStackTrace();
         }
         return count;
+    }
+
+    /**
+     * 把图片从服务器上删除
+     * @return
+     */
+    @Override
+    @CacheEvict(value = "picList" , allEntries = true)
+    public int picThrow(){
+        AtomicInteger count = new AtomicInteger();
+        try {
+            List<picList> delPicList = this.picListMapper.picOverTime();
+            delPicList.forEach(pic -> {
+                System.out.println(pic.getId());
+                //删除文件
+                try {
+                    if (FtpFileUtil.deleteFile(pic.getPic_url(), pic.getType())){
+                        int num = this.picListMapper.picDump(pic.getId());
+                        if ( num == 0 ){
+                            System.out.println("id为"+pic.getId()+"的图片数据库删除失败");
+                        }else {
+                            count.getAndIncrement();
+                        }
+                    }else {
+                        System.out.println("id为"+pic.getId()+"的图片删除失败");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return count.get();
     }
 }

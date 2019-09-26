@@ -67,4 +67,10 @@ public interface WebMessageService {
      * @return
      */
     int picDel(Boolean del, Integer id);
+
+    /**
+     * 把图片从服务器上删除
+     * @return
+     */
+    int picThrow();
 }
