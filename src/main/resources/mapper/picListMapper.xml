@@ -16,6 +16,12 @@
             <if test="create_etime != null">
                 AND #{create_etime} > create_time
             </if>
+            <if test="isDel == true">
+                AND del_time is not null
+            </if>
+            <if test="isDel == false">
+                AND ISNULL(del_time)
+            </if>
         </where>
     </select>
 
@@ -28,6 +34,7 @@
                 FROM pic_list
                 <where>
                     type = '/typeList/'
+                    AND ISNULL(del_time)
                 </where>
             ) as a
             LEFT JOIN type_list as t
@@ -42,6 +49,9 @@
     <select id="TypeListType" resultType="String">
         SELECT type
         FROM pic_list
+        <where>
+            ISNULL(del_time)
+        </where>
         GROUP BY type
     </select>
 
@@ -52,6 +62,27 @@
                 pic_url = #{pic_url},
             </if>
             create_time = unix_timestamp(now())
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <insert id="picAddNew" parameterType="com.mrwan.pigcount.pojo.picList">
+        insert into pic_list
+        (pic_url, type, create_time)
+        values (#{pic_url}, #{type}, unix_timestamp(now()))
+    </insert>
+
+    <update id="picDel" parameterType="String">
+        update pic_list
+        <set>
+            <if test="del == true">
+                del_time = unix_timestamp(now())
+            </if>
+            <if test="del == false">
+                del_time = null
+            </if>
         </set>
         <where>
             id = #{id}

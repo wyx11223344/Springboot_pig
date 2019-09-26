@@ -34,15 +34,15 @@ public interface WebMessageService {
 
     /**
      * 查看图片
-     *
      * @param type
      * @param create_itime
      * @param create_etime
      * @param page
      * @param pageSize
+     * @param isDel
      * @return
      */
-    pageInfoB<picList> typePicList(String type, Long create_itime, Long create_etime, Integer page, Integer pageSize);
+    pageInfoB<picList> typePicList(String type, Long create_itime, Long create_etime, Integer page, Integer pageSize, Boolean isDel);
 
     /**
      * 获取图片总类型
@@ -60,4 +60,11 @@ public interface WebMessageService {
      * @return
      */
     Boolean picChange(picList picList, String new_url, MultipartFile file) throws IOException;
+
+    /**
+     * 图片删除恢复
+     * @param del
+     * @return
+     */
+    int picDel(Boolean del, Integer id);
 }

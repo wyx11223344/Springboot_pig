@@ -26,6 +26,16 @@ public class webChangeControl {
         @Autowired
         private WebMessageService webMessageService;
 
+        /**
+         * 修改和新增类型列表
+         * @param id
+         * @param type
+         * @param typename
+         * @param is_get
+         * @param icon_name
+         * @param bgc
+         * @return
+         */
         @ApiOperation(value = "修改和新增类型列表")
         @RequestMapping(value = "list_change")
         public BaseResponseInfo userGet(@RequestParam(value = "id", required = false) Integer id,
@@ -51,25 +61,44 @@ public class webChangeControl {
             return res;
         }
 
-        @ApiOperation(value = "修改和新增图片")
+        /**
+         * 修改和新增图片
+         * @param id
+         * @param type
+         * @param pic_url
+         * @param new_url
+         * @param file
+         * @return
+         */
+        @ApiOperation(value = "修改、删除和新增图片")
         @RequestMapping("pic_change")
         public BaseResponseInfo picChange(@RequestParam(value = "id", required = false) Integer id,
-                                        @RequestParam(value = "type", required = false) String type,
-                                        @RequestParam(value = "pic_url", required = false) String pic_url,
+                                          @RequestParam(value = "type", required = false) String type,
+                                          @RequestParam(value = "pic_url", required = false) String pic_url,
                                           @RequestParam(value = "new_url", required = false) String new_url,
-                                          @RequestParam(value="file", required = false) MultipartFile file){
+                                          @RequestParam(value = "file", required = false) MultipartFile file,
+                                          @RequestParam(value = "del", required = false) Boolean del){
             BaseResponseInfo res = new BaseResponseInfo();
             try {
-                System.out.println(file);
-                System.out.println(id);
-                picList picList = new picList(id, pic_url, type, (long) 0);
-                Boolean isSuccess = this.webMessageService.picChange(picList, new_url, file);
-                if ( isSuccess ){
-                    res.code = 200;
-                    res.msg = "操作成功";
+                if (del != null){
+                    int count = this.webMessageService.picDel(del, id);
+                    if ( count >= 1 ){
+                        res.code = 200;
+                        res.msg = "操作成功";
+                    }else {
+                        res.code = 1;
+                        res.msg = "操作失败";
+                    }
                 }else {
-                    res.code = 1;
-                    res.msg = "操作失败";
+                    picList picList = new picList(id, pic_url, type, (long) 0);
+                    Boolean isSuccess = this.webMessageService.picChange(picList, new_url, file);
+                    if ( isSuccess ){
+                        res.code = 200;
+                        res.msg = "操作成功";
+                    }else {
+                        res.code = 1;
+                        res.msg = "操作失败";
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

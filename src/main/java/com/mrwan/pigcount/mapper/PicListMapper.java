@@ -14,9 +14,10 @@ public interface PicListMapper extends com.github.abel533.mapper.Mapper<typeList
      * @param type
      * @param create_itime
      * @param create_etime
+     * @param isDel
      * @return
      */
-    List<picList> ListGet(@Param("type") String type, @Param("create_itime") Long create_itime, @Param("create_etime") Long create_etime);
+    List<picList> ListGet(@Param("type") String type, @Param("create_itime") Long create_itime, @Param("create_etime") Long create_etime, @Param("isDel") Boolean isDel);
 
     /**
      * 获取能够用在类型的图片
@@ -36,4 +37,18 @@ public interface PicListMapper extends com.github.abel533.mapper.Mapper<typeList
      * @return
      */
     int picChange(picList picList);
+
+    /**
+     * 图片新增
+     * @param picList
+     * @return
+     */
+    int picAddNew(picList picList);
+
+    /**
+     *
+     * @param del
+     * @return
+     */
+    int picDel(@Param("del") Boolean del, @Param("id") Integer id);
 }

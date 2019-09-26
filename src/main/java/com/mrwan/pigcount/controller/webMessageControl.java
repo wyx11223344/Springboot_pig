@@ -27,6 +27,11 @@ public class webMessageControl {
         @Autowired
         private WebMessageService webMessageService;
 
+        /**
+         * 获取类型列表
+         * @param type
+         * @return
+         */
         @ApiOperation(value = "获取类型列表")
         @RequestMapping("list_get")
         public BaseResponseInfo listGet(@RequestParam(value = "type", required = false) Integer type){
@@ -42,6 +47,17 @@ public class webMessageControl {
             return res;
         }
 
+        /**
+         * 类型图片列表获取
+         * @param page
+         * @param pageSize
+         * @param type
+         * @param create_itime
+         * @param create_etime
+         * @param choose
+         * @param isDel
+         * @return
+         */
         @ApiOperation(value = "类型图片列表获取")
         @RequestMapping("type_pic_list")
         public BaseResponseInfo typePicList(@RequestParam(value = "page", required = false) Integer page,
@@ -49,7 +65,8 @@ public class webMessageControl {
                                             @RequestParam(value = "type", required = false) String type,
                                             @RequestParam(value = "create_itime", required = false) Long create_itime,
                                             @RequestParam(value = "create_etime", required = false) Long create_etime,
-                                            @RequestParam(value = "choose", required = false) Boolean choose){
+                                            @RequestParam(value = "choose", required = false) Boolean choose,
+                                            @RequestParam(value = "isDel", required = false) Boolean isDel){
             BaseResponseInfo res = new BaseResponseInfo();
             try {
                 if ( choose == null ){
@@ -59,7 +76,7 @@ public class webMessageControl {
                     List<picList> picList = this.webMessageService.typePicNo();
                     res.data = picList;
                 }else {
-                    pageInfoB<picList> picList = this.webMessageService.typePicList(type, create_itime, create_etime, page, pageSize);
+                    pageInfoB<picList> picList = this.webMessageService.typePicList(type, create_itime, create_etime, page, pageSize, isDel);
                     res.data = picList;
                 }
             } catch (Exception e) {
@@ -70,6 +87,10 @@ public class webMessageControl {
             return res;
         }
 
+        /**
+         * 图片查询类型获取
+         * @return
+         */
         @ApiOperation(value = "图片查询类型获取")
         @RequestMapping("type_pic_type")
         public BaseResponseInfo typePicType(){

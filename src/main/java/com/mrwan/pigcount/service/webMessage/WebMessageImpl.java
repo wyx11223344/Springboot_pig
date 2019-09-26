@@ -89,12 +89,12 @@ public class WebMessageImpl implements WebMessageService {
      * @return
      */
     @Override
-    @Cacheable(value = "picList" , key = "targetClass + methodName + #type + #create_itime + #create_etime + #page + #pageSize")
-    public pageInfoB<picList> typePicList(String type, Long create_itime, Long create_etime, Integer page, Integer pageSize){
+    @Cacheable(value = "picList" , key = "targetClass + methodName + #type + #create_itime + #create_etime + #page + #pageSize + #isDel")
+    public pageInfoB<picList> typePicList(String type, Long create_itime, Long create_etime, Integer page, Integer pageSize, Boolean isDel){
         pageInfoB<picList> pageInfo = null;
         try {
             PageHelper.startPage(page,pageSize);
-            List<picList> picList = this.picListMapper.ListGet(type, create_itime, create_etime);
+            List<picList> picList = this.picListMapper.ListGet(type, create_itime, create_etime, isDel);
             pageInfo = new pageInfoB<picList>(picList);
         }catch (Exception e){
             e.printStackTrace();
@@ -118,6 +118,14 @@ public class WebMessageImpl implements WebMessageService {
         return picList;
     }
 
+    /**
+     * 图片修改
+     * @param picList
+     * @param new_url
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @Override
     @CacheEvict(value = "picList" , allEntries = true)
     public Boolean picChange(picList picList, String new_url, MultipartFile file) throws IOException {
@@ -127,19 +135,49 @@ public class WebMessageImpl implements WebMessageService {
         //获得文件后缀名
         String a = file.getOriginalFilename().substring(begin, last);
         InputStream inputStream=file.getInputStream();
-        FtpFileUtil.deleteFile(picList.getPic_url(), picList.getType());
-        Boolean flag = FtpFileUtil.uploadFile(new_url + a, inputStream, picList.getType());
-        if(flag){
-            picList picNewList = new picList(picList.getId(), new_url + a, picList.getType(), (long) 0);
-            int count = this.picListMapper.picChange(picNewList);
-            if (count > 0){
-                flag = true;
+        if ( picList.getId() == null ){
+            //新增
+            Boolean flag = FtpFileUtil.uploadFile(new_url + a, inputStream, picList.getType());
+            if(flag){
+                picList picNewList = new picList(null, new_url + a, picList.getType(), (long) 0);
+                int count = this.picListMapper.picAddNew(picNewList);
+                if (count > 0){
+                    flag = true;
+                }else {
+                    flag = false;
+                }
+                return flag;
             }else {
-                flag = false;
+                return false;
             }
-            return flag;
         }else {
-            return false;
+            //修改
+            FtpFileUtil.deleteFile(picList.getPic_url(), picList.getType());
+            Boolean flag = FtpFileUtil.uploadFile(new_url + a, inputStream, picList.getType());
+            if(flag){
+                picList picNewList = new picList(picList.getId(), new_url + a, picList.getType(), (long) 0);
+                int count = this.picListMapper.picChange(picNewList);
+                if (count > 0){
+                    flag = true;
+                }else {
+                    flag = false;
+                }
+                return flag;
+            }else {
+                return false;
+            }
         }
+    }
+
+    @Override
+    @CacheEvict(value = "picList" , allEntries = true)
+    public int picDel(Boolean del, Integer id) {
+        int count = 0;
+        try {
+            count = this.picListMapper.picDel(del, id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return count;
     }
 }
