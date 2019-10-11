@@ -4,6 +4,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by WYX on 2019/9/10
@@ -18,11 +19,15 @@ public class FtpFileUtil {
     private static final String FTP_USERNAME = "pigcount";
     //密码
     private static final String FTP_PASSWORD = "123321sxy?";
+    /** 本地字符编码 */
+    private static String LOCAL_CHARSET = "UTF-8";
+    // FTP协议里面，规定文件名编码为iso-8859-1
+    private static String SERVER_CHARSET = "ISO-8859-1";
 
     public  static boolean uploadFile(String originFileName, InputStream input, String FTP_BASEPATH){
         boolean success = false;
         FTPClient ftp = new FTPClient();
-        ftp.setControlEncoding("GBK");
+        ftp.setControlEncoding(SERVER_CHARSET);//1. 设置编码
         try {
             int reply;
             ftp.connect(FTP_ADDRESS, FTP_PORT);// 连接FTP服务器
@@ -32,6 +37,9 @@ public class FtpFileUtil {
                 ftp.disconnect();
                 return success;
             }
+            originFileName = new String(originFileName.getBytes(LOCAL_CHARSET),
+                    SERVER_CHARSET);
+            System.out.println(originFileName);
             System.out.println("开始上传");
             ftp.enterLocalPassiveMode();
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
@@ -58,7 +66,7 @@ public class FtpFileUtil {
     public static boolean deleteFile(String filename, String FTP_BASEPATH) throws IOException {
         System.out.println(FTP_BASEPATH + filename );
         FTPClient ftpClient = new FTPClient();
-        ftpClient.setControlEncoding("utf-8");//1. 设置编码
+        ftpClient.setControlEncoding(SERVER_CHARSET);//1. 设置编码
         ftpClient.connect(FTP_ADDRESS, FTP_PORT); //2. 连接ftp服务器
         ftpClient.login(FTP_USERNAME, FTP_PASSWORD); //3. 登录ftp服务器
         int replyCode = ftpClient.getReplyCode(); // 判断是否成功登录服务器
@@ -66,7 +74,9 @@ public class FtpFileUtil {
             System.err.println("连接失败");
             return false;
         }
-
+        filename = new String(filename.getBytes(LOCAL_CHARSET),
+                SERVER_CHARSET);
+        System.out.println(filename);
         boolean flag = false;
         try {
             ftpClient.changeWorkingDirectory(FTP_BASEPATH);
@@ -92,6 +102,7 @@ public class FtpFileUtil {
     }
 
     public static void main(String[] args) throws IOException {
-        deleteFile("logo_ceshi.png", "/typeList/");
+        String filename = "测试";
+        System.out.println(filename = new String(filename.getBytes(StandardCharsets.UTF_8), SERVER_CHARSET));
     }
 }
