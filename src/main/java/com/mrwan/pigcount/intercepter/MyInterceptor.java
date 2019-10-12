@@ -19,8 +19,10 @@ public class MyInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse response, Object object) throws Exception {
         RequestWrapper request = new RequestWrapper(req);
         String Origin_allow = request.getHeader("referer");
-        if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://pigshop.mrwanmisshen.com/swagger-ui.html") ){
-            return true;
+        if (Origin_allow != null){
+            if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://pigshop.mrwanmisshen.com/swagger-ui.html") ){
+                return true;
+            }
         }
         String check = request.getHeader("Access-Control-Request-Headers");
         String signature = request.getParameter("signature");
