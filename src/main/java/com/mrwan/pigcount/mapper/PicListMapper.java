@@ -64,4 +64,11 @@ public interface PicListMapper extends com.github.abel533.mapper.Mapper<typeList
      * @return
      */
     int picDump(@Param("id") Integer id);
+
+    /**
+     * 图片新增返回会id值
+     * @param picList
+     * @return
+     */
+    int picAddNewId(picList picList);
 }

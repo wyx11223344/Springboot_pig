@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mrwan.pigcount.mapper.PigListMapper">
+    <insert id="booksAdd" parameterType="com.mrwan.pigcount.pojo.pigList">
+        insert into pig_list
+        (username, money, time, create_time, status, detaile, type, pic_ids)
+        values (#{username}, #{money}, #{time}, unix_timestamp(now()), 1, #{detaile}, #{type}, #{pic_ids})
+    </insert>
+
+    <select id="pigListFind" parameterType="String" resultType="com.mrwan.pigcount.pojo.pigList">
+        SELECT *
+        FROM pig_list
+        <where>
+            username = #{username}
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="stime != null">
+                AND time > #{stime}
+            </if>
+            <if test="etime != null">
+                AND #{etime} > time
+            </if>
+        </where>
+        order by id
+        desc
+    </select>
+</mapper>

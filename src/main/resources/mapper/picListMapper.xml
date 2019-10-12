@@ -23,6 +23,8 @@
                 AND ISNULL(del_time)
             </if>
         </where>
+        order by id
+        desc
     </select>
 
     <select id="TypeListNo" resultType="com.mrwan.pigcount.pojo.picList">
@@ -105,4 +107,10 @@
             id = #{id}
         </where>
     </delete>
+
+    <insert id="picAddNewId" parameterType="com.mrwan.pigcount.pojo.picList" useGeneratedKeys="true"  keyProperty="id">
+        insert into pic_list
+        (pic_url, type, create_time)
+        values (#{pic_url}, #{type}, unix_timestamp(now()))
+    </insert>
 </mapper>

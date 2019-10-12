@@ -1,5 +1,6 @@
 package com.mrwan.pigcount.controller;
 
+import com.mrwan.pigcount.mapper.PicListMapper;
 import com.mrwan.pigcount.pojo.picList;
 import com.mrwan.pigcount.pojo.typeList;
 import com.mrwan.pigcount.service.webMessage.WebMessageService;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 
 @RestController
@@ -108,5 +112,4 @@ public class webChangeControl {
             return res;
         }
     }
-
 }
