@@ -51,20 +51,23 @@ public class booksMessageControl {
             List<Users> users = (List<Users>) uuu.getAttribute("username");
             String username = users.get(0).getUsername();
             try {
-                String check = this.booksService.picAddNewId(file, username);
-                if (check.equals("")){
-                    res.code = -200;
-                    res.msg = "上传文件出错";
-                }else {
-                    pigList pigList = new pigList(username, money, time, (long) 0, 1, notice, typeId, check);
-                    int count = this.booksService.booksAdd(pigList);
-                    if ( count > 0){
-                        res.code = 200;
-                        res.msg = "保存成功";
-                    }else {
-                        res.code = -1;
-                        res.msg = "保存失败";
+                String check = "";
+                if (file.length > 0){
+                    check = this.booksService.picAddNewId(file, username);
+                    if (check.equals("")){
+                        res.code = -200;
+                        res.msg = "上传文件出错";
+                        return res;
                     }
+                }
+                pigList pigList = new pigList(username, money, time, (long) 0, 1, notice, typeId, check);
+                int count = this.booksService.booksAdd(pigList);
+                if ( count > 0){
+                    res.code = 200;
+                    res.msg = "保存成功";
+                }else {
+                    res.code = -1;
+                    res.msg = "保存失败";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
