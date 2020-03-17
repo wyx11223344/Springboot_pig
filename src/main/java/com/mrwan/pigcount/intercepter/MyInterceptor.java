@@ -49,6 +49,7 @@ public class MyInterceptor implements HandlerInterceptor {
             if (!noLog){
                 HttpSession uuu = request.getSession();
                 Object users = uuu.getAttribute("username");
+                System.out.println(users);
                 if (users != null) {
                     uuu.setMaxInactiveInterval(1800);
                 } else {
