@@ -35,8 +35,8 @@ public class MyInterceptor implements HandlerInterceptor {
             if ( signature.equals("") || rand.equals("") || timestamp == null ){
                 response.setStatus(201);
                 response.getWriter().print("我看你就是个蛤蟆皮");
-                response.getWriter();
-                response.getWriter();
+                response.getWriter().flush();
+                response.getWriter().close();
                 return false;
             }
             if ( sign.sign_check(signature , rand , timestamp )){

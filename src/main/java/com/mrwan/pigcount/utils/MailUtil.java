@@ -42,7 +42,7 @@ public class MailUtil implements Runnable {
             // 1.获取默认session对象
             Session session = Session.getDefaultInstance(properties, new Authenticator() {
                 public PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("962717593@qq.com", "mhdhyhvbtacobfee"); // 发件人邮箱账号、授权码
+                    return new PasswordAuthentication("962717593@qq.com", "gfgwsuurgzfibech"); // 发件人邮箱账号、授权码
                 }
             });
 
