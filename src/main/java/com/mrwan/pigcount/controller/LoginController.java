@@ -42,6 +42,7 @@ public class LoginController {
                 if ( !users.isEmpty() ){
                     if ( users.get(0).getState() == 1 ){
                         //创建Session对象保存User对象
+                        System.out.println(users);
                         session.setAttribute("username", users);
                         session.setMaxInactiveInterval(1800);
                         res.code = 200;
