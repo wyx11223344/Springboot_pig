@@ -20,7 +20,7 @@ public class MyInterceptor implements HandlerInterceptor {
         RequestWrapper request = new RequestWrapper(req);
         String Origin_allow = request.getHeader("referer");
         if (Origin_allow != null){
-            if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://pigshop.mrwanmisshen.com/swagger-ui.html") ){
+            if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://193.112.145.172:8068/swagger-ui.html") ){
                 return true;
             }
         }
