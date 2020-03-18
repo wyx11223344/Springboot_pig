@@ -46,19 +46,16 @@ public class MyInterceptor implements HandlerInterceptor {
                 response.getWriter().close();
                 return false;
             }
-            if (!noLog){
-                HttpSession uuu = request.getSession();
-                Object users = uuu.getAttribute("username");
-                System.out.println(uuu);
-                if (users != null) {
-                    uuu.setMaxInactiveInterval(1800);
-                } else {
-                    response.setStatus(201);
-                    response.getWriter().print("您无权访问");
-                    response.getWriter().flush();
-                    response.getWriter().close();
-                    return false;
-                }
+            HttpSession uuu = request.getSession();
+            Object users = uuu.getAttribute("username");
+            if (users != null) {
+                uuu.setMaxInactiveInterval(1800);
+            } else {
+                response.setStatus(201);
+                response.getWriter().print("您无权访问");
+                response.getWriter().flush();
+                response.getWriter().close();
+                return false;
             }
         }
         return true;
