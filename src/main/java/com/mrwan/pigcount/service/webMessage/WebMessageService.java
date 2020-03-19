@@ -73,4 +73,11 @@ public interface WebMessageService {
      * @return
      */
     int picThrow();
+
+    /**
+     * 通过ids查询图片信息
+     * @param ids
+     * @return
+     */
+    List<picList> PicListByID(String ids);
 }

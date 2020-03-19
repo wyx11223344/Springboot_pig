@@ -105,6 +105,25 @@ public class webMessageControl {
             res.msg = "获取成功";
             return res;
         }
+
+        /**
+         * 图片查询类型获取
+         * @return
+         */
+        @ApiOperation(value = "通过ids查询图片数组")
+        @RequestMapping("get_pics_ids")
+        public BaseResponseInfo typePicType(@RequestParam(value = "ids", required = true) String ids){
+            BaseResponseInfo res = new BaseResponseInfo();
+            try {
+                List<picList> picList = this.webMessageService.PicListByID(ids);
+                res.data = picList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.code = 200;
+            res.msg = "获取成功";
+            return res;
+        }
     }
 
 }

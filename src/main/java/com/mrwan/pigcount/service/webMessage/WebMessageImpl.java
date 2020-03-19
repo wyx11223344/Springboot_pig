@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -104,6 +105,24 @@ public class WebMessageImpl implements WebMessageService {
             e.printStackTrace();
         }
         return pageInfo;
+    }
+
+    /**
+     * 通过ids获取图片
+     * @param ids
+     * @return
+     */
+    @Override
+    public List<picList> PicListByID(String ids){
+        List<picList> picList = null;
+        try {
+            List<String> strArr = Arrays.asList(ids.split(","));
+            System.out.println(strArr);
+            picList = this.picListMapper.ListGetById(strArr);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return picList;
     }
 
     /**

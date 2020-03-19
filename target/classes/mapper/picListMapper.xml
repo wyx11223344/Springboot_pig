@@ -113,4 +113,15 @@
         (pic_url, type, create_time)
         values (#{pic_url}, #{type}, unix_timestamp(now()))
     </insert>
+
+    <select id="ListGetById" resultType="com.mrwan.pigcount.pojo.picList">
+        select *
+        from pic_list
+        <where>
+            <foreach collection="ids" item="ids" index="index"
+                     open="(" close=")" separator="or">
+                id = #{ids}
+            </foreach>
+        </where>
+    </select>
 </mapper>

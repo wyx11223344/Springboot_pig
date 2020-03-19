@@ -4,7 +4,6 @@ import com.mrwan.pigcount.pojo.picList;
 import com.mrwan.pigcount.pojo.typeList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 @Mapper
@@ -71,4 +70,11 @@ public interface PicListMapper extends com.github.abel533.mapper.Mapper<typeList
      * @return
      */
     int picAddNewId(picList picList);
+
+    /**
+     * 通过id获取图片
+     * @param ids
+     * @return
+     */
+    List<picList> ListGetById(@Param("ids") List ids);
 }

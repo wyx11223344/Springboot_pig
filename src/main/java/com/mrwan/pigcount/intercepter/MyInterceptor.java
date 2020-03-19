@@ -28,7 +28,6 @@ public class MyInterceptor implements HandlerInterceptor {
         String signature = request.getParameter("signature");
         String rand = request.getParameter("rand");
         Integer timestamp = Integer.valueOf(request.getParameter("timestamp"));
-        Boolean noLog = Boolean.valueOf(request.getParameter("noLog"));
         if ( check != null ){
 
         }else {
