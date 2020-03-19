@@ -29,7 +29,7 @@ public class Swagger2Configuration {
         return new ApiInfoBuilder()
                 .title("猪猪账本接口文档")
                 .description("猪猪账本相关网址")
-                .termsOfServiceUrl("http://193.112.145.172:9999/#/")
+                .termsOfServiceUrl("http://193.112.145.172:8698/dist//#/")
                 .version("1.0")
                 .build();
     }
