@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class booksMessageControl {
@@ -103,6 +104,40 @@ public class booksMessageControl {
                 try {
                     pageInfoB<pigList> pigList = this.booksService.pigListFind(username, page, pageSize, type, stime, etime);
                     res.data = pigList;
+                    res.code = 200;
+                    res.msg = "查询成功";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res.code = -1;
+                    res.msg = "服务器出错";
+                }
+            }else {
+                res.code = -200;
+                res.msg = "请先登录";
+            }
+            return res;
+        }
+
+        /**
+         * 账单统计查询
+         * @param req
+         * @param stime
+         * @param etime
+         * @return
+         */
+        @ApiOperation(value = "账单统计查询")
+        @RequestMapping("booksCountType")
+        public BaseResponseInfo booksCountType(HttpServletRequest req,
+                                          @RequestParam(value = "stime", required = false) Long stime,
+                                          @RequestParam(value = "etime", required = false) Long etime) {
+            BaseResponseInfo res = new BaseResponseInfo();
+            HttpSession uuu = req.getSession();
+            List<Users> users = (List<Users>) uuu.getAttribute("username");
+            if (users != null){
+                String username = users.get(0).getUsername();
+                try {
+                    List<Map> CountType = this.booksService.pigCountType(username, stime, etime);
+                    res.data = CountType;
                     res.code = 200;
                     res.msg = "查询成功";
                 } catch (Exception e) {

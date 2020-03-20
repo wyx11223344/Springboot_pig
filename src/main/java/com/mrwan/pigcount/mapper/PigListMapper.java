@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PigListMapper {
@@ -29,4 +30,15 @@ public interface PigListMapper {
                                    @Param("type") String type,
                                    @Param("stime") Long stime,
                                    @Param("etime") Long etime);
+
+    /**
+     * 记账统计
+     * @param username
+     * @param stime
+     * @param etime
+     * @return
+     */
+    List<Map> pigCountType(@Param("username") String username,
+                           @Param("stime") Long stime,
+                           @Param("etime") Long etime);
 }

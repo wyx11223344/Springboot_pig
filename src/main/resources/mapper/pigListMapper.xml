@@ -27,4 +27,29 @@
         order by id
         desc
     </select>
+
+    <resultMap id="CountTypeMap" type="map">
+        <result property="type" column="type"/>
+        <result property="typename" column="typename"/>
+        <result property="total" column="total"/>
+    </resultMap>
+    <select id="pigCountType" parameterType="String" resultMap="CountTypeMap">
+        SELECT p.type, t.typename, SUM(p.money) as total
+        FROM (
+            SELECT * FROM pig_list
+            <where>
+                username = #{username}
+                <if test="stime != null">
+                    AND time > #{stime}
+                </if>
+                <if test="etime != null">
+                    AND #{etime} > time
+                </if>
+            </where>
+            ) p
+        LEFT JOIN type_list t
+        ON p.type = t.id
+         GROUP BY p.type
+         ORDER BY p.type
+    </select>
 </mapper>

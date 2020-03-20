@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BooksServiceImpl implements BooksService {
@@ -102,6 +103,25 @@ public class BooksServiceImpl implements BooksService {
             e.printStackTrace();
         }
         return pageInfo;
+    }
+
+    /**
+     * 记账统计查询
+     * @param username
+     * @param stime
+     * @param etime
+     * @return
+     */
+    @Override
+    @Cacheable(value = "pigList" , key = "targetClass + methodName + #username + #stime + #etime")
+    public List<Map> pigCountType(String username, Long stime, Long etime) {
+        List<Map> pigList = null;
+        try {
+            pigList = this.pigListMapper.pigCountType(username, stime, etime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pigList;
     }
 
 }

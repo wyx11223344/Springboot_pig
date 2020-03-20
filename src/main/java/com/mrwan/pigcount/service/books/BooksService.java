@@ -4,6 +4,9 @@ import com.mrwan.pigcount.pojo.pageInfoB;
 import com.mrwan.pigcount.pojo.pigList;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BooksService {
 
     /**
@@ -31,4 +34,13 @@ public interface BooksService {
      * @param etime
      */
     pageInfoB<pigList> pigListFind(String username, Integer page, Integer pageSize, String type, Long stime, Long etime);
+
+    /**
+     * 统计数据查询
+     * @param username
+     * @param stime
+     * @param etime
+     * @return
+     */
+    List<Map> pigCountType(String username, Long stime, Long etime);
 }
