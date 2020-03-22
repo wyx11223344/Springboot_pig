@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,24 @@ public class BooksServiceImpl implements BooksService {
         int count = 0;
         try {
             count = this.pigListMapper.booksAdd(pigList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    /**
+     * 删除记账数据
+     * @param ids
+     * @return
+     */
+    @Override
+    @CacheEvict(value = "pigList" , allEntries = true)
+    public int booksDel(String ids){
+        int count = 0;
+        try {
+            List<String> strArr = Arrays.asList(ids.split(","));
+            count = this.pigListMapper.booksDel(strArr);
         }catch (Exception e){
             e.printStackTrace();
         }

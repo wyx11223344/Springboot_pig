@@ -41,4 +41,11 @@ public interface PigListMapper {
     List<Map> pigCountType(@Param("username") String username,
                            @Param("stime") Long stime,
                            @Param("etime") Long etime);
+
+    /**
+     * 删除记账数据
+     * @param ids
+     * @return
+     */
+    int booksDel(@Param("ids") List ids);
 }

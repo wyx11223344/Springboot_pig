@@ -24,6 +24,13 @@ public interface BooksService {
     int booksAdd(pigList pigList);
 
     /**
+     * 删除记账数据
+     * @param ids
+     * @return
+     */
+    int booksDel(String ids);
+
+    /**
      * 记账查询
      * @return
      * @param username

@@ -52,4 +52,15 @@
          GROUP BY p.type
          ORDER BY p.type
     </select>
+
+    <delete id="booksDel">
+        DELETE
+        FROM pig_list
+        <where>
+            <foreach collection="ids" item="ids" index="index"
+                     open="(" close=")" separator="or">
+                id = #{ids}
+            </foreach>
+        </where>
+    </delete>
 </mapper>

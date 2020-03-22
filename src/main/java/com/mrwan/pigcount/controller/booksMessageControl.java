@@ -151,5 +151,23 @@ public class booksMessageControl {
             }
             return res;
         }
+
+        /**
+         * 删除账单数据
+         * @return
+         */
+        @ApiOperation(value = "删除账单数据")
+        @RequestMapping("booksDel")
+        public BaseResponseInfo typePicType(@RequestParam(value = "ids", required = true) String ids){
+            BaseResponseInfo res = new BaseResponseInfo();
+            try {
+                res.data = this.booksService.booksDel(ids);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.code = 200;
+            res.msg = "获取成功";
+            return res;
+        }
     }
 }
