@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.mrwan.pigcount.mapper.UsersMapper;
 import com.mrwan.pigcount.pojo.pageInfoB;
 import com.mrwan.pigcount.pojo.Users;
-import com.mrwan.pigcount.dao.UsersDAO;
 import com.mrwan.pigcount.pojo.adminUsers;
 import com.mrwan.pigcount.utils.MailUtil;
 import com.mrwan.pigcount.utils.code_get;
@@ -19,8 +18,6 @@ import java.util.List;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-    @Autowired
-    private UsersDAO usersDao;
 
     @Autowired
     private UsersMapper usersMapper;

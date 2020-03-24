@@ -22,7 +22,7 @@ public class pigList implements Serializable {
     private String username;
 
     @Column(name = "money")
-    private int money;
+    private float money;
 
     @Column(name = "time")
     private long time;
@@ -58,11 +58,11 @@ public class pigList implements Serializable {
         this.username = username;
     }
 
-    public int getMoney() {
+    public float getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 
@@ -114,7 +114,7 @@ public class pigList implements Serializable {
         this.pic_ids = pic_ids;
     }
 
-    public pigList(String username, int money, long time, long create_time, int status, String detaile, int type, String pic_ids) {
+    public pigList(String username, float money, long time, long create_time, int status, String detaile, int type, String pic_ids) {
         this.username = username;
         this.money = money;
         this.create_time = create_time;
