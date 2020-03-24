@@ -42,7 +42,7 @@ public class booksMessageControl {
         @ApiOperation(value = "账单记录新增、修改")
         @RequestMapping("booksChange")
         public BaseResponseInfo booksChange(HttpServletRequest req ,
-                                            @RequestParam(value = "money", required = true) Integer money,
+                                            @RequestParam(value = "money", required = true) float money,
                                             @RequestParam(value = "notice", required = false) String notice,
                                             @RequestParam(value = "time", required = true) long time,
                                             @RequestParam(value = "typeId", required = true) int typeId,
