@@ -7,6 +7,7 @@ import com.mrwan.pigcount.service.books.BooksService;
 import com.mrwan.pigcount.utils.BaseResponseInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.omg.CORBA.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +139,11 @@ public class booksMessageControl {
                 String username = users.get(0).getUsername();
                 try {
                     List<Map> CountType = this.booksService.pigCountType(username, stime, etime);
-                    res.data = CountType;
+                    String haveMoney = this.booksService.pigHaveMoney(username);
+                    HashMap<String, Object> map =  new HashMap<String,Object>();
+                    map.put("countType", CountType);
+                    map.put("haveMoney", haveMoney);
+                    res.data = map;
                     res.code = 200;
                     res.msg = "查询成功";
                 } catch (Exception e) {

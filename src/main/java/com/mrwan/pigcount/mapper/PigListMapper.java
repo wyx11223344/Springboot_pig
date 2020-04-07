@@ -48,4 +48,11 @@ public interface PigListMapper {
      * @return
      */
     int booksDel(@Param("ids") List ids);
+
+    /**
+     * 剩余金额统计
+     * @param username
+     * @return
+     */
+    String pigHaveMoney(@Param("username") String username);
 }

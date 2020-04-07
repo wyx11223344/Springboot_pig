@@ -38,6 +38,7 @@
         FROM (
             SELECT * FROM pig_list
             <where>
+                type != 25 AND
                 username = #{username}
                 <if test="stime != null">
                     AND time > #{stime}
@@ -63,4 +64,11 @@
             </foreach>
         </where>
     </delete>
+
+    <select id="pigHaveMoney" parameterType="String" resultType="string">
+        SELECT b.B - a.A as haveMo
+        FROM
+        (SELECT if(isnull(SUM(money)),0,SUM(money)) as A FROM `pig_list` WHERE username = #{username} AND type != 25 ) a,
+        (SELECT if(isnull(SUM(money)),0,SUM(money)) as B FROM `pig_list` WHERE username = #{username} AND type = 25) b
+    </select>
 </mapper>

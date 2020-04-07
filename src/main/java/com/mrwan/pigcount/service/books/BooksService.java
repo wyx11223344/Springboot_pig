@@ -50,4 +50,11 @@ public interface BooksService {
      * @return
      */
     List<Map> pigCountType(String username, Long stime, Long etime);
+
+    /**
+     * 剩余金额统计
+     * @param username
+     * @return
+     */
+    String pigHaveMoney(String username);
 }

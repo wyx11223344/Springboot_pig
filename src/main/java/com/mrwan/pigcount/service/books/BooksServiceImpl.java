@@ -143,4 +143,22 @@ public class BooksServiceImpl implements BooksService {
         return pigList;
     }
 
+    /**
+     * 剩余金额统计
+     * @param username
+     * @return
+     */
+    @Override
+//    @Cacheable(value = "pigList" , key = "targetClass + methodName + #username")
+    public String pigHaveMoney(String username) {
+        String pigHave = null;
+        try {
+            pigHave = this.pigListMapper.pigHaveMoney(username);
+            System.out.println(pigHave);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pigHave;
+    }
+
 }
