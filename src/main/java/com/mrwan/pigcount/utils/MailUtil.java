@@ -56,7 +56,7 @@ public class MailUtil implements Runnable {
             message.setSubject("猪猪账本，账号激活");
             // 2.4设置邮件内容
             String content = "<html><head></head><body><h1>这是一封激活邮件,激活请点击以下链接</h1><h3><a href='http://36.111.183.168:8888/pigcount/#/activite?code="
-                    + code + "&" + email + "'>点我进行快速的激活！</href></h3></body></html>";
+                    + code + "&" + email + "'>点我进行快速的激活！</a></h3></body></html>";
             message.setContent(content, "text/html;charset=UTF-8");
             // 3.发送邮件
             Transport.send(message);
