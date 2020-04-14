@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 public class FtpFileUtil {
 
     //ftp服务器ip地址
-    private static final String FTP_ADDRESS = "193.112.145.172";
+    private static final String FTP_ADDRESS = "36.111.183.168";
     //端口号
     private static final int FTP_PORT = 21;
     //用户名

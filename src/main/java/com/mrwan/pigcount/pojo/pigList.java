@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 表名为:type_list
  */
 @Entity
-@Table(name = "pig_list")
+@Table(name = "pigList")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class pigList implements Serializable {
     @Id
