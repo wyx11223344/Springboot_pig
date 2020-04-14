@@ -18,45 +18,45 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse response, Object object) throws Exception {
         RequestWrapper request = new RequestWrapper(req);
-//        String Origin_allow = request.getHeader("referer");
-//        if (Origin_allow != null){
-//            if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://193.112.145.172:8068/swagger-ui.html") ){
-//                return true;
-//            }
-//        }
-//        String check = request.getHeader("Access-Control-Request-Headers");
-//        String signature = request.getParameter("signature");
-//        String rand = request.getParameter("rand");
-//        Integer timestamp = Integer.valueOf(request.getParameter("timestamp"));
-//        if ( check != null ){
-//
-//        }else {
-//            if ( signature.equals("") || rand.equals("") || timestamp == null ){
-//                response.setStatus(201);
-//                response.getWriter().print("我看你就是个蛤蟆皮");
-//                response.getWriter().flush();
-//                response.getWriter().close();
-//                return false;
-//            }
-//            if ( sign.sign_check(signature , rand , timestamp )){
-//                response.setStatus(201);
-//                response.getWriter().print("超时了");
-//                response.getWriter().flush();
-//                response.getWriter().close();
-//                return false;
-//            }
-//            HttpSession uuu = request.getSession();
-//            Object users = uuu.getAttribute("username");
-//            if (users != null) {
-//                uuu.setMaxInactiveInterval(1800);
-//            } else {
-//                response.setStatus(201);
-//                response.getWriter().print("您无权访问");
-//                response.getWriter().flush();
-//                response.getWriter().close();
-//                return false;
-//            }
-//        }
+        String Origin_allow = request.getHeader("referer");
+        if (Origin_allow != null){
+            if ( Origin_allow.equals("http://localhost:8068/swagger-ui.html") || Origin_allow.equals("http://36.111.183.168:8888/swagger-ui.html") ){
+                return true;
+            }
+        }
+        String check = request.getHeader("Access-Control-Request-Headers");
+        String signature = request.getParameter("signature");
+        String rand = request.getParameter("rand");
+        Integer timestamp = Integer.valueOf(request.getParameter("timestamp"));
+        if ( check != null ){
+
+        }else {
+            if ( signature.equals("") || rand.equals("") || timestamp == null ){
+                response.setStatus(201);
+                response.getWriter().print("我看你就是个蛤蟆皮");
+                response.getWriter().flush();
+                response.getWriter().close();
+                return false;
+            }
+            if ( sign.sign_check(signature , rand , timestamp )){
+                response.setStatus(201);
+                response.getWriter().print("超时了");
+                response.getWriter().flush();
+                response.getWriter().close();
+                return false;
+            }
+            HttpSession uuu = request.getSession();
+            Object users = uuu.getAttribute("username");
+            if (users != null) {
+                uuu.setMaxInactiveInterval(1800);
+            } else {
+                response.setStatus(201);
+                response.getWriter().print("您无权访问");
+                response.getWriter().flush();
+                response.getWriter().close();
+                return false;
+            }
+        }
         return true;
     }
 
