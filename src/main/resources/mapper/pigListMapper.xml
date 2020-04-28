@@ -68,7 +68,7 @@
     <select id="pigHaveMoney" parameterType="String" resultType="string">
         SELECT b.B - a.A as haveMo
         FROM
-        (SELECT if(isnull(SUM(money)),0,SUM(money)) as A FROM `pig_list` WHERE username = #{username} AND type != 25 ) a,
-        (SELECT if(isnull(SUM(money)),0,SUM(money)) as B FROM `pig_list` WHERE username = #{username} AND type = 25) b
+        (SELECT if(isnull(SUM(money)),0,SUM(money)) as A FROM `pig_list` WHERE username = #{username} AND type != 27 ) a,
+        (SELECT if(isnull(SUM(money)),0,SUM(money)) as B FROM `pig_list` WHERE username = #{username} AND type = 27) b
     </select>
 </mapper>
